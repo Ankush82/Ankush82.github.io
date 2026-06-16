@@ -4,7 +4,9 @@
 
 Autoregressive decoding generates one token at a time, and at every step, attention needs the key (K) and value (V) vectors of every preceding token. The naive approach recomputes K and V for the entire prefix at each step — wasteful, because a past token's K and V never change once computed; they depend only on that token's (already-finalized) hidden state, not on what comes after it.
 
-The fix is the standard KV cache: compute K and V for each token once, store them, and reuse them on every subsequent step. This turns an O(n²) recomputation pattern into O(n) incremental work.
+The fix is the standard KV cache: compute K and V for each token once, store them, and reuse them on every subsequent step.
+
+> This turns an O(n²) recomputation pattern into O(n) incremental work.
 
 ```
 step 1: predict "the"   -> needs K,V for: []
@@ -85,7 +87,9 @@ graph LR
     style B5 fill:#d4edda,stroke:#155724
 ```
 
-Note that sequence A's blocks (`4, 1, 5`) are non-adjacent in the pool, and sequence B's blocks are interleaved with A's. Neither sequence's data is contiguous as a whole — but each block individually is contiguous, which is the only granularity the GPU's coalesced-read requirement actually needs.
+Note that sequence A's blocks (`4, 1, 5`) are non-adjacent in the pool, and sequence B's blocks are interleaved with A's.
+
+> Neither sequence's data is contiguous as a whole — but each block individually is contiguous, which is the only granularity the GPU's coalesced-read requirement actually needs.
 
 ### Implementation
 
@@ -165,7 +169,7 @@ graph TB
     style P1 fill:#d4edda,stroke:#155724
 ```
 
-The ~6x improvement comes entirely from eliminating the gap between *reserved* and *used* memory. Since GPU memory directly bounds achievable batch size, and batch size directly bounds GPU utilization during decode (a memory-bandwidth-bound phase), this translates to proportionally higher throughput on identical hardware — the rationale behind every production serving engine (vLLM, TensorRT-LLM, etc.) adopting paged allocation as the default.
+> The ~6x improvement comes entirely from eliminating the gap between *reserved* and *used* memory. Since GPU memory directly bounds achievable batch size, and batch size directly bounds GPU utilization during decode (a memory-bandwidth-bound phase), this translates to proportionally higher throughput on identical hardware — the rationale behind every production serving engine (vLLM, TensorRT-LLM, etc.) adopting paged allocation as the default.
 
 ## Validating Against Real Model Weights
 
