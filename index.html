@@ -354,7 +354,6 @@ function openReader(mdUrl){
   overlay.classList.add('is-open');
   overlay.scrollTop = 0;
   document.body.style.overflow = 'hidden';
-  history.pushState(null, '', '#' + mdUrl);
   fetch(mdUrl)
     .then(r=>{ if(!r.ok) throw new Error(r.status); return r.text(); })
     .then(md=>{
@@ -373,7 +372,7 @@ function openReader(mdUrl){
 function closeReader(){
   document.getElementById('reader').classList.remove('is-open');
   document.body.style.overflow = '';
-  history.pushState(null, '', location.pathname);
+  history.replaceState(null, '', location.pathname);
 }
 
 function build(){
@@ -383,7 +382,7 @@ function build(){
   root.appendChild($(`<div class="reader" id="reader" role="dialog" aria-modal="true"><div class="reader__inner"><button class="reader__back" id="reader-back">← back</button><div class="reader__prose" id="reader-content"></div></div></div>`));
   document.getElementById('reader-back').addEventListener('click', closeReader);
   document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeReader(); });
-  document.addEventListener('click', e=>{ const b=e.target.closest('[data-md]'); if(b) openReader(b.getAttribute('data-md')); });
+  document.addEventListener('click', e=>{ const b=e.target.closest('[data-md]'); if(b){ e.preventDefault(); location.hash = b.getAttribute('data-md'); } });
 
   // top bar + nav (tabs expose one nav link per tab)
   const navParts=[];
@@ -437,16 +436,16 @@ function build(){
   requestAnimationFrame(()=>{const h=document.querySelector('.hero');if(h)h.classList.add('in');});
 }
 
+window.addEventListener('hashchange', ()=>{
+  const h = decodeURIComponent(location.hash.slice(1));
+  if(/\.md$/.test(h)) openReader(h);
+  else closeReader();
+});
 function init(){
   build();
   const h = decodeURIComponent(location.hash.slice(1));
   if(/\.md$/.test(h)) openReader(h);
 }
-window.addEventListener('popstate', ()=>{
-  const h = decodeURIComponent(location.hash.slice(1));
-  if(/\.md$/.test(h)) openReader(h);
-  else { document.getElementById('reader').classList.remove('is-open'); document.body.style.overflow=''; }
-});
 if(document.readyState!=='loading'){init();}else{document.addEventListener('DOMContentLoaded',init);}
 </script>
 </body>
