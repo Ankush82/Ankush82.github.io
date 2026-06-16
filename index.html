@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+
+<!-- These lines control your browser tab + link-share preview. Edit the text in quotes. -->
+<title>Ankush — SDE 2 · ML Research</title>
+<meta name="description" content="SDE 2 in unstructured data management, focused on LLM architecture and AI/ML.">
+<meta property="og:title" content="Ankush — SDE 2 · ML Research">
+<meta property="og:description" content="SDE 2 in unstructured data management, focused on LLM architecture and AI/ML.">
+<meta property="og:type" content="profile">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --paper:#EEF1F4; --paper-raised:#F8FAFC;
+    --ink:#13171E; --ink-soft:#4C5763; --ink-faint:#7E8995;
+    --line:#D4DBE3; --line-soft:#E2E7ED;
+    --accent:#1E47E6; --accent-deep:#1535B0; --accent-wash:rgba(30,71,230,.07);
+    --grid:rgba(94,118,150,.07);
+    --serif:"Fraunces",Georgia,serif;
+    --sans:"Hanken Grotesk",-apple-system,BlinkMacSystemFont,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,monospace;
+    --gutter:128px; --col:640px; --ease:cubic-bezier(.2,.7,.2,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  body{
+    background-color:var(--paper);
+    background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:32px 32px;background-position:-1px -1px;
+    color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  }
+  .skip{position:absolute;left:-999px;top:0;z-index:100;background:var(--ink);color:var(--paper);padding:10px 16px;font-family:var(--mono);font-size:13px;text-decoration:none}
+  .skip:focus{left:12px;top:12px}
+  a{color:inherit}
+  ::selection{background:var(--accent);color:#fff}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+  .wrap{max-width:920px;margin:0 auto;padding:0 28px}
+
+  .topbar{position:sticky;top:0;z-index:30;backdrop-filter:saturate(1.2) blur(7px);background:rgba(238,241,244,.78);border-bottom:1px solid var(--line-soft)}
+  .topbar__inner{max-width:920px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+  .mark{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-weight:600;font-size:14px;letter-spacing:.02em;text-decoration:none;color:var(--ink)}
+  .mark__glyph{width:18px;height:18px;flex:none;border:1.5px solid var(--ink);border-radius:3px;position:relative}
+  .mark__glyph::after{content:"";position:absolute;inset:3px;background:var(--accent);border-radius:1px}
+  .topnav{display:flex;gap:22px;font-family:var(--mono);font-size:13px;letter-spacing:.02em}
+  .topnav a{color:var(--ink-soft);text-decoration:none;transition:color .18s var(--ease)}
+  .topnav a:hover{color:var(--accent)}
+  @media (max-width:620px){.topnav{display:none}}
+
+  .block{display:grid;grid-template-columns:var(--gutter) minmax(0,var(--col));max-width:920px;margin:0 auto;padding:0 28px}
+  .block__rail{position:relative;padding-top:6px;padding-right:28px}
+  .rail__index{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent);letter-spacing:.06em}
+  .rail__name{display:block;margin-top:4px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint)}
+  .rail__tick{position:absolute;right:-1px;top:9px;width:13px;height:1px;background:var(--line)}
+  .block__body{min-width:0;padding-bottom:64px;border-left:1px solid var(--line);padding-left:32px}
+  @media (max-width:720px){
+    .block{grid-template-columns:1fr}
+    .block__rail{padding:0 0 10px 0;display:flex;align-items:baseline;gap:10px}
+    .rail__name{margin-top:0}.rail__tick{display:none}
+    .block__body{border-left:none;padding-left:0}
+  }
+
+  .hero{padding:74px 0 30px}
+  .hero__meta{font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;color:var(--ink-soft);display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:26px}
+  .hero__meta .dot{color:var(--accent)}
+  .hero__name{font-family:var(--serif);font-weight:500;font-size:clamp(58px,12vw,108px);line-height:.92;letter-spacing:-.025em;margin-bottom:26px}
+  .hero__thesis{font-size:clamp(20px,2.7vw,26px);line-height:1.4;max-width:23ch;color:var(--ink);font-weight:400}
+  .hero__thesis b{font-weight:600}.hero__thesis .a{color:var(--accent);font-weight:600}
+  .hero__links{margin-top:34px;display:flex;flex-wrap:wrap;gap:10px}
+  .pill{font-family:var(--mono);font-size:13px;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:8px 16px;background:var(--paper-raised);display:inline-flex;align-items:center;gap:8px;cursor:pointer;transition:border-color .18s var(--ease),color .18s var(--ease),transform .18s var(--ease)}
+  .pill:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+  .pill .arr{color:var(--ink-faint);transition:color .18s var(--ease)}
+  .pill:hover .arr{color:var(--accent)}
+
+  .h{font-family:var(--serif);font-weight:500;font-size:clamp(26px,3.5vw,34px);line-height:1.1;letter-spacing:-.01em;margin-bottom:22px}
+  .lede{font-size:19px;line-height:1.6}
+  .prose p+p{margin-top:18px}
+  .prose a{color:var(--accent);text-decoration:none;background-image:linear-gradient(var(--accent),var(--accent));background-size:100% 1px;background-repeat:no-repeat;background-position:0 100%;transition:background-size .2s var(--ease);padding-bottom:1px}
+  .prose a:hover{background-size:100% 2px}
+  .muted{color:var(--ink-soft)}
+  .footnote{font-family:var(--mono);font-size:13.5px;color:var(--ink-soft);margin-top:24px;padding-top:18px;border-top:1px dashed var(--line)}
+  .footnote a{color:var(--accent);text-decoration:none}
+  .footnote a:hover{text-decoration:underline}
+
+  /* tabs */
+  .tabbar{display:flex;gap:22px;border-bottom:1px solid var(--line);margin-bottom:24px;flex-wrap:wrap}
+  .tab{appearance:none;background:none;border:none;cursor:pointer;font-family:var(--sans);font-size:16px;font-weight:600;color:var(--ink-faint);padding:4px 2px 12px;margin-bottom:-1px;border-bottom:2px solid transparent;transition:color .18s var(--ease),border-color .18s var(--ease)}
+  .tab:hover{color:var(--accent)}
+  .tab.is-active{color:var(--ink);border-bottom-color:var(--accent)}
+  .tabpanel{display:none;animation:fade .35s var(--ease)}
+  .tabpanel.is-active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.tabpanel{animation:none}}
+
+  /* articles */
+  .article{display:block;text-decoration:none;color:inherit;padding:18px 0;border-bottom:1px solid var(--line-soft);position:relative;transition:padding-left .2s var(--ease)}
+  .article:first-child{padding-top:2px}
+  .article::before{content:"▸";position:absolute;left:-18px;top:19px;color:var(--accent);opacity:0;transition:opacity .2s var(--ease),left .2s var(--ease);font-size:13px}
+  a.article:hover{padding-left:18px}
+  a.article:hover::before{opacity:1;left:0}
+  .article__date{font-family:var(--mono);font-size:12px;letter-spacing:.03em;color:var(--ink-faint)}
+  .article__title{font-family:var(--serif);font-size:21px;font-weight:500;letter-spacing:-.01em;margin:5px 0 4px;line-height:1.25}
+  .article__summary{color:var(--ink-soft);font-size:16px;line-height:1.55;max-width:58ch}
+
+  /* work */
+  .work{list-style:none}
+  .work__item{display:block;text-decoration:none;color:inherit;padding:20px 0;border-bottom:1px solid var(--line-soft);position:relative;transition:padding-left .2s var(--ease)}
+  .work__item:first-child{padding-top:4px}
+  .work__item::before{content:"▸";position:absolute;left:-18px;top:21px;color:var(--accent);opacity:0;transition:opacity .2s var(--ease),left .2s var(--ease);font-size:13px}
+  a.work__item:hover{padding-left:18px}
+  a.work__item:hover::before{opacity:1;left:0}
+  .work__head{display:flex;align-items:baseline;justify-content:space-between;gap:14px}
+  .work__title{font-family:var(--serif);font-size:21px;font-weight:500;letter-spacing:-.01em}
+  .work__year{font-family:var(--mono);font-size:12px;color:var(--ink-faint);white-space:nowrap}
+  .work__desc{color:var(--ink-soft);margin-top:6px;font-size:16px;line-height:1.55;max-width:56ch}
+  .tags{margin-top:11px;display:flex;flex-wrap:wrap;gap:7px}
+  .tag{font-family:var(--mono);font-size:11.5px;letter-spacing:.02em;color:var(--ink-soft);background:var(--paper-raised);border:1px solid var(--line);border-radius:4px;padding:3px 8px}
+
+  /* publications */
+  .pub{padding:18px 0;border-bottom:1px solid var(--line-soft)}
+  .pub:first-child{padding-top:2px}
+  .pub__venue{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--accent);text-transform:uppercase}
+  .pub__title{font-family:var(--serif);font-size:20px;font-weight:500;margin:7px 0 4px;line-height:1.3}
+  .pub__meta{color:var(--ink-soft);font-size:15.5px}
+
+  /* education */
+  .edu{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap}
+  .edu__degree{font-family:var(--serif);font-size:21px;font-weight:500}
+  .edu__school{color:var(--ink-soft)}
+  .edu__detail{margin-top:10px;font-family:var(--mono);font-size:13px;color:var(--ink-soft);display:flex;flex-wrap:wrap;gap:6px 16px}
+  .edu__detail .k{color:var(--ink-faint)}
+
+  /* chips */
+  .chips{display:flex;flex-wrap:wrap;gap:9px}
+  .chip{font-family:var(--sans);font-size:14.5px;font-weight:500;padding:8px 15px;border-radius:999px;border:1px solid var(--line);background:var(--paper-raised);color:var(--ink);transition:background .18s var(--ease),border-color .18s var(--ease)}
+  .chip:hover{background:var(--accent-wash);border-color:var(--accent)}
+
+  .footer{border-top:1px solid var(--line);margin-top:24px}
+  .footer__inner{max-width:920px;margin:0 auto;padding:42px 28px 60px;display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start;justify-content:space-between}
+  .social{display:flex;flex-wrap:wrap;gap:18px;font-family:var(--mono);font-size:13.5px}
+  .social a{color:var(--ink-soft);text-decoration:none;transition:color .18s var(--ease)}
+  .social a:hover{color:var(--accent)}
+  .colophon{font-family:var(--mono);font-size:12px;color:var(--ink-faint);line-height:1.7}
+  .colophon .a{color:var(--ink-soft)}
+
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div id="app"></div>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     ▼▼▼  EDIT EVERYTHING BELOW. DON'T TOUCH THE <script> AFTER IT.  ▼▼▼
+
+     HOW TO UPDATE:
+       • Change text   → edit the text between quotes.
+       • Add an article → in the "Articles" tab, copy one { date, title, summary, url } line
+                          and put it at the TOP of that items list. Newest first.
+       • Add a project → in the "Selected work" tab, copy one { title, ... } block.
+       • Add a section → copy a whole { ... } block in `sections:[ ]`. The 01/02/03
+                          numbers renumber themselves.
+       • <b>bold</b> and <a href="...">links</a> work inside any text.
+       • Section types: "prose" | "tabs" | "articles" | "work" | "publications" | "education" | "chips"
+       • Every { ... } needs a comma after it. Inside text use ' not " (or write \").
+
+     After editing, save and redeploy.
+     ════════════════════════════════════════════════════════════════════════ -->
+<script>
+const CONTENT = {
+
+  /* ——— identity ——— */
+  name: "Ankush",
+  email: "ankushnath82@gmail.com",
+  socials: [
+    { label: "GitHub",   url: "https://github.com/Ankush82" },
+    { label: "LinkedIn", url: "https://www.linkedin.com/in/ankush-nath-09a467191" },
+  ],
+  footerLine: "Built to be precise under pressure.",
+
+  /* ——— hero (top of the page) ——— */
+  heroMeta: ["Bengaluru, IN", "SDE 2", "ML Research"],
+  heroThesis: `I build <b>systems that move unstructured data at scale</b>, train <b>models that can explain themselves</b>, and take apart <span class="a">LLM architectures</span> to see what makes them tick.`,
+  heroLinks: [
+    { label: "Articles",      href: "#explore", icon:"→", tabsec:"explore", tabidx:0 },
+    { label: "Selected work", href: "#explore", icon:"→", tabsec:"explore", tabidx:1 },
+    { label: "Email",         href: "mailto:ankushnath82@gmail.com", icon:"↗" },
+  ],
+
+  /* ——— sections, top to bottom. Numbering is automatic. ——— */
+  sections: [
+
+    { id:"about", rail:"introduction", nav:"about", heading:"Introduction",
+      type:"prose",
+      body:[
+        `Hey — I'm <b>Ankush</b>, an <b>SDE 2</b> working in the <b>unstructured data management</b> space.`,
+        `I'm especially drawn to <b>LLM architecture</b> and AI/ML — how these systems are built, where they break, and how to put them to work on real data problems. Most of what I do sits at the seam between large-scale data systems and machine learning.`,
+      ]
+    },
+
+    /* Articles + Selected work live here as two tabs. */
+    { id:"explore", rail:"work & writing", heading:"",
+      type:"tabs",
+      tabs:[
+
+        { label:"Articles", type:"articles",
+          items:[
+            { date:"2026-06-15", title:"Hello — first post", summary:"Kicking off this site. I'll be posting notes on data systems, ML, and LLMs here.", url:"" },
+            // ↑ copy this line, change the text, put new posts on top.
+          ]
+        },
+
+        { label:"Selected work", type:"work",
+          items:[
+            { title:"AI-powered hiring pipeline", year:"2026", url:"",
+              desc:"ML-driven candidate triage with LLM-assisted screening, producing Notion-ready deliverables.",
+              tags:["Python","ML triage","LLM"] },
+            { title:"Text-to-SQL LoRA fine-tune", year:"2026", url:"",
+              desc:"Fine-tuning a small model to turn natural language into SQL, trained on Colab with Unsloth.",
+              tags:["LoRA","Unsloth","Colab"] },
+            { title:"LLM benchmarking harness", year:"2026", url:"",
+              desc:"Comparing models through OpenRouter across math, reasoning and multi-turn chat.",
+              tags:["OpenRouter","evals"] },
+          ]
+        },
+
+      ]
+    },
+
+    /* Writing & research — kept for now (see note). Delete this whole block to remove it. */
+    { id:"writing", rail:"research", nav:"research", heading:"Writing & research",
+      type:"publications",
+      items:[
+        { venue:"Liverpool Law Review · 2026",
+          title:"Gabčíkovo–Nagymaros as a basis for India to terminate the Indus Waters Treaty",
+          meta:"Applying the ICJ's reasoning on fundamental change of circumstances to a contemporary treaty dispute." },
+        { venue:"WTO Moot Court · JHJMCC",
+          title:"John H. Jackson Moot Court Competition",
+          meta:"Trade-law advocacy and judicial-question compendiums for both complainant and respondent." },
+      ]
+    },
+
+    { id:"passions", rail:"passionate about", heading:"Things I'm passionate about",
+      type:"chips",
+      items:["Distributed Storage","Machine Learning","LLMs & Fine-tuning","Computational Math","Swimming"]
+    },
+
+  ]
+};
+/* ▲▲▲  STOP EDITING HERE. The code below renders everything above.  ▲▲▲ */
+
+/* ---------- renderer ---------- */
+const $ = (h)=>{const t=document.createElement('template');t.innerHTML=h.trim();return t.content.firstChild;};
+const esc = (s)=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const fmtDate = (iso)=>{ if(!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso;
+  const d=new Date(iso+'T00:00:00'); return d.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}); };
+
+function renderList(type, items){
+  switch(type){
+    case "articles":
+      return items.map(a=>{
+        const open = a.url ? `<a class="article" href="${esc(a.url)}">` : `<div class="article">`;
+        const close = a.url ? `</a>` : `</div>`;
+        return open
+          + `<div class="article__date">${esc(fmtDate(a.date))}</div>`
+          + `<div class="article__title">${esc(a.title)}</div>`
+          + (a.summary?`<div class="article__summary">${a.summary}</div>`:'')
+          + close;
+      }).join('');
+    case "work":
+      return `<ul class="work">` + items.map(w=>{
+        const open = w.url ? `<a class="work__item" href="${esc(w.url)}">` : `<div class="work__item">`;
+        const close = w.url ? `</a>` : `</div>`;
+        return `<li>` + open
+          + `<div class="work__head"><span class="work__title">${esc(w.title)}</span>`
+          + (w.year?`<span class="work__year">${esc(w.year)}</span>`:'') + `</div>`
+          + (w.desc?`<p class="work__desc">${esc(w.desc)}</p>`:'')
+          + (w.tags&&w.tags.length?`<div class="tags">${w.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>`:'')
+          + close + `</li>`;
+      }).join('') + `</ul>`;
+    case "publications":
+      return items.map(p=>`<div class="pub"><div class="pub__venue">${esc(p.venue)}</div>`
+        + `<div class="pub__title">${esc(p.title)}</div>`
+        + (p.meta?`<div class="pub__meta">${esc(p.meta)}</div>`:'') + `</div>`).join('');
+    case "education":
+      return items.map(e=>`<div class="edu"><span class="edu__degree">${esc(e.degree)}</span>`
+        + `<span class="edu__school">${esc(e.school)}</span></div>`
+        + (e.details&&e.details.length?`<div class="edu__detail">`
+          + e.details.map(d=>`<span><span class="k">${esc(d.k)}</span> ${esc(d.v)}</span>`).join('') + `</div>`:'')).join('');
+    case "chips":
+      return `<div class="chips">` + items.map(c=>`<span class="chip">${esc(c)}</span>`).join('') + `</div>`;
+    default: return '';
+  }
+}
+
+function renderInner(s){
+  if(s.type==="prose"){
+    return (s.heading?`<h2 class="h">${esc(s.heading)}</h2>`:'')
+      + `<div class="prose">`
+      + s.body.map((p,i)=>`<p${i===0?' class="lede"':''}>${p}</p>`).join('')
+      + (s.footnote?`<p class="footnote">${s.footnote}</p>`:'') + `</div>`;
+  }
+  if(s.type==="tabs"){
+    const bar = s.tabs.map((t,i)=>`<button class="tab${i===0?' is-active':''}" role="tab" aria-selected="${i===0}" data-tabsec="${s.id}" data-tabidx="${i}">${esc(t.label)}</button>`).join('');
+    const panels = s.tabs.map((t,i)=>`<div class="tabpanel${i===0?' is-active':''}" id="tabpanel-${s.id}-${i}" role="tabpanel">${renderList(t.type,t.items)}</div>`).join('');
+    return (s.heading?`<h2 class="h">${esc(s.heading)}</h2>`:'')
+      + `<div class="tabbar" role="tablist">${bar}</div><div class="tabpanels">${panels}</div>`;
+  }
+  return (s.heading?`<h2 class="h">${esc(s.heading)}</h2>`:'') + renderList(s.type, s.items);
+}
+
+function activateTab(sec, idx){
+  idx = String(idx);
+  document.querySelectorAll('.tab[data-tabsec="'+sec+'"]').forEach(b=>{
+    const on = b.getAttribute('data-tabidx')===idx;
+    b.classList.toggle('is-active',on); b.setAttribute('aria-selected', on?'true':'false');
+  });
+  document.querySelectorAll('[id^="tabpanel-'+sec+'-"]').forEach(p=>{
+    p.classList.toggle('is-active', p.id==='tabpanel-'+sec+'-'+idx);
+  });
+}
+
+function build(){
+  const root = document.getElementById('app');
+
+  // top bar + nav (tabs expose one nav link per tab)
+  const navParts=[];
+  CONTENT.sections.forEach(s=>{
+    if(s.type==="tabs"){ s.tabs.forEach((t,i)=>navParts.push(`<a href="#${s.id}" data-tabsec="${s.id}" data-tabidx="${i}">${esc(t.label.toLowerCase())}</a>`)); }
+    else if(s.nav){ navParts.push(`<a href="#${s.id}">${esc(s.nav)}</a>`); }
+  });
+  navParts.push(`<a href="#contact">contact</a>`);
+  root.appendChild($(`<header class="topbar"><div class="topbar__inner">
+      <a class="mark" href="#top"><span class="mark__glyph"></span>${esc(CONTENT.name.toLowerCase())}</a>
+      <nav class="topnav" aria-label="Sections">${navParts.join('')}</nav></div></header>`));
+
+  const main = $(`<main id="main"><a id="top"></a></main>`);
+  main.appendChild($(`<section class="hero wrap reveal" aria-label="Introduction"><div>
+      <p class="hero__meta">${CONTENT.heroMeta.map((m,i)=>`<span>${esc(m)}</span>${i<CONTENT.heroMeta.length-1?'<span class="dot">/</span>':''}`).join('')}</p>
+      <h1 class="hero__name">${esc(CONTENT.name)}</h1>
+      <p class="hero__thesis">${CONTENT.heroThesis}</p>
+      <div class="hero__links">${CONTENT.heroLinks.map(l=>{
+        const data=(l.tabsec!=null)?` data-tabsec="${esc(l.tabsec)}" data-tabidx="${esc(l.tabidx)}"`:'';
+        return `<a class="pill" href="${esc(l.href)}"${data}>${esc(l.label)} <span class="arr">${esc(l.icon||'→')}</span></a>`;
+      }).join('')}</div>
+    </div></section>`));
+
+  CONTENT.sections.forEach((s,i)=>{
+    const idx = String(i+1).padStart(2,'0');
+    main.appendChild($(`<section class="block reveal" id="${s.id}">
+      <div class="block__rail"><span class="rail__index">${idx}</span><span class="rail__name">${esc(s.rail)}</span><span class="rail__tick"></span></div>
+      <div class="block__body">${renderInner(s)}</div></section>`));
+  });
+  root.appendChild(main);
+
+  const social = CONTENT.socials.map(s=>`<a href="${esc(s.url)}">${esc(s.label)} ↗</a>`).join('')
+    + `<a href="mailto:${esc(CONTENT.email)}">${esc(CONTENT.email)}</a>`;
+  root.appendChild($(`<footer class="footer" id="contact"><div class="footer__inner">
+      <nav class="social" aria-label="Social links">${social}</nav>
+      <div class="colophon"><div>${esc(CONTENT.name)} — Bengaluru, India</div>
+      <div class="a">${esc(CONTENT.footerLine)}</div><div>© ${new Date().getFullYear()}</div></div>
+    </div></footer>`));
+
+  // tab switching (works for tab buttons, nav links, and hero pills)
+  document.querySelectorAll('[data-tabsec]').forEach(el=>{
+    el.addEventListener('click',()=>activateTab(el.getAttribute('data-tabsec'), el.getAttribute('data-tabidx')));
+  });
+
+  // reveal on scroll
+  const els=document.querySelectorAll('.reveal');
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!('IntersectionObserver' in window)||reduce){els.forEach(e=>e.classList.add('in'));return;}
+  const io=new IntersectionObserver((en)=>en.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}}),{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+  els.forEach(e=>io.observe(e));
+  requestAnimationFrame(()=>{const h=document.querySelector('.hero');if(h)h.classList.add('in');});
+}
+
+if(document.readyState!=='loading'){build();}else{document.addEventListener('DOMContentLoaded',build);}
+</script>
+</body>
+</html>
