@@ -154,6 +154,31 @@
   .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
   .reveal.in{opacity:1;transform:none}
   @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+
+  /* article md button */
+  button.article{width:100%;text-align:left;background:none;border:none;cursor:pointer;font:inherit}
+
+  /* reader overlay */
+  .reader{position:fixed;inset:0;z-index:50;background:var(--paper);overflow-y:auto;transform:translateX(100%);transition:transform .38s var(--ease)}
+  .reader.is-open{transform:none}
+  .reader__inner{max-width:680px;margin:0 auto;padding:44px 28px 96px}
+  .reader__back{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:13px;color:var(--ink-soft);background:none;border:none;cursor:pointer;padding:0;margin-bottom:44px;transition:color .18s var(--ease)}
+  .reader__back:hover{color:var(--accent)}
+  .reader__prose h1{font-family:var(--serif);font-size:clamp(30px,5vw,48px);font-weight:500;line-height:1.08;letter-spacing:-.025em;margin-bottom:32px}
+  .reader__prose h2{font-family:var(--serif);font-size:26px;font-weight:500;margin:40px 0 12px;line-height:1.2}
+  .reader__prose h3{font-family:var(--sans);font-size:18px;font-weight:600;margin:28px 0 8px}
+  .reader__prose p{margin-bottom:18px;line-height:1.72}
+  .reader__prose a{color:var(--accent);text-decoration:none;border-bottom:1px solid currentColor}
+  .reader__prose strong{font-weight:600}
+  .reader__prose code{font-family:var(--mono);font-size:.87em;background:var(--paper-raised);border:1px solid var(--line);border-radius:4px;padding:2px 6px}
+  .reader__prose pre{background:var(--paper-raised);border:1px solid var(--line);border-radius:8px;padding:22px;overflow-x:auto;margin-bottom:24px}
+  .reader__prose pre code{background:none;border:none;padding:0;font-size:13.5px;line-height:1.6}
+  .reader__prose blockquote{border-left:3px solid var(--accent);padding-left:20px;margin:24px 0;color:var(--ink-soft)}
+  .reader__prose ul,.reader__prose ol{padding-left:22px;margin-bottom:18px}
+  .reader__prose li{margin-bottom:8px;line-height:1.65}
+  .reader__prose hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+  .reader__prose img{max-width:100%;border-radius:8px;margin:24px 0;display:block}
+  .reader__prose .mermaid{margin:28px 0;text-align:center}
 </style>
 </head>
 <body>
@@ -176,7 +201,11 @@
 
      After editing, save and redeploy.
      ════════════════════════════════════════════════════════════════════════ -->
+<script src="https://cdn.jsdelivr.net/npm/marked@9/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
 <script>
+mermaid.initialize({startOnLoad:false, theme:'neutral'});
+
 const CONTENT = {
 
   /* ——— identity ——— */
@@ -189,7 +218,7 @@ const CONTENT = {
   footerLine: "Built to be precise under pressure.",
 
   /* ——— hero (top of the page) ——— */
-  heroMeta: ["Bengaluru, IN", "SDE 2", "ML Research"],
+  heroMeta: ["Bengaluru, IN", "Software Engineer 2", "ML Research", "AI"],
   heroThesis: `I build <b>systems that move unstructured data at scale</b>, train <b>models that can explain themselves</b>, and take apart <span class="a">LLM architectures</span> to see what makes them tick.`,
   heroLinks: [
     { label: "Articles",      href: "#explore", icon:"→", tabsec:"explore", tabidx:0 },
@@ -215,7 +244,7 @@ const CONTENT = {
 
         { label:"Articles", type:"articles",
           items:[
-            { date:"2026-06-15", title:"Hello — first post", summary:"Kicking off this site. I'll be posting notes on data systems, ML, and LLMs here.", url:"" },
+            { date:"2026-06-15", title:"Hello — first post", summary:"Kicking off this site. I'll be posting notes on data systems, ML, and LLMs here.", url:"articles/hello.md" },
             // ↑ copy this line, change the text, put new posts on top.
           ]
         },
@@ -237,20 +266,7 @@ const CONTENT = {
       ]
     },
 
-    /* Writing & research — kept for now (see note). Delete this whole block to remove it. */
-    { id:"writing", rail:"research", nav:"research", heading:"Writing & research",
-      type:"publications",
-      items:[
-        { venue:"Liverpool Law Review · 2026",
-          title:"Gabčíkovo–Nagymaros as a basis for India to terminate the Indus Waters Treaty",
-          meta:"Applying the ICJ's reasoning on fundamental change of circumstances to a contemporary treaty dispute." },
-        { venue:"WTO Moot Court · JHJMCC",
-          title:"John H. Jackson Moot Court Competition",
-          meta:"Trade-law advocacy and judicial-question compendiums for both complainant and respondent." },
-      ]
-    },
-
-    { id:"passions", rail:"passionate about", heading:"Things I'm passionate about",
+{ id:"passions", rail:"passionate about", heading:"Things I'm passionate about",
       type:"chips",
       items:["Distributed Storage","Machine Learning","LLMs & Fine-tuning","Computational Math","Swimming"]
     },
@@ -269,8 +285,9 @@ function renderList(type, items){
   switch(type){
     case "articles":
       return items.map(a=>{
-        const open = a.url ? `<a class="article" href="${esc(a.url)}">` : `<div class="article">`;
-        const close = a.url ? `</a>` : `</div>`;
+        const isMd = a.url && /\.md$/.test(a.url);
+        const open = !a.url ? `<div class="article">` : isMd ? `<button class="article" data-md="${esc(a.url)}">` : `<a class="article" href="${esc(a.url)}">`;
+        const close = !a.url ? `</div>` : isMd ? `</button>` : `</a>`;
         return open
           + `<div class="article__date">${esc(fmtDate(a.date))}</div>`
           + `<div class="article__title">${esc(a.title)}</div>`
@@ -330,8 +347,41 @@ function activateTab(sec, idx){
   });
 }
 
+function openReader(mdUrl){
+  const overlay = document.getElementById('reader');
+  const content = document.getElementById('reader-content');
+  content.innerHTML = '<p style="color:var(--ink-faint);font-family:var(--mono);font-size:13px;padding-top:40px">Loading…</p>';
+  overlay.classList.add('is-open');
+  overlay.scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+  fetch(mdUrl)
+    .then(r=>{ if(!r.ok) throw new Error(r.status); return r.text(); })
+    .then(md=>{
+      content.innerHTML = marked.parse(md);
+      content.querySelectorAll('pre code.language-mermaid').forEach(el=>{
+        const div = document.createElement('div');
+        div.className = 'mermaid';
+        div.textContent = el.textContent;
+        el.closest('pre').replaceWith(div);
+      });
+      mermaid.run({nodes: content.querySelectorAll('.mermaid')});
+    })
+    .catch(()=>{ content.innerHTML = '<p style="color:var(--ink-faint)">Could not load article.</p>'; });
+}
+
+function closeReader(){
+  document.getElementById('reader').classList.remove('is-open');
+  document.body.style.overflow = '';
+}
+
 function build(){
   const root = document.getElementById('app');
+
+  // reader overlay
+  root.appendChild($(`<div class="reader" id="reader" role="dialog" aria-modal="true"><div class="reader__inner"><button class="reader__back" id="reader-back">← back</button><div class="reader__prose" id="reader-content"></div></div></div>`));
+  document.getElementById('reader-back').addEventListener('click', closeReader);
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeReader(); });
+  document.addEventListener('click', e=>{ const b=e.target.closest('[data-md]'); if(b) openReader(b.getAttribute('data-md')); });
 
   // top bar + nav (tabs expose one nav link per tab)
   const navParts=[];
