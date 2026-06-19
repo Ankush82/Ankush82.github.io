@@ -1,0 +1,173 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="970" viewBox="0 0 900 970" font-family="'JetBrains Mono', Menlo, monospace">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7E8995"/>
+    </marker>
+    <marker id="arrowInk" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#13171E"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="900" height="970" fill="#EEF1F4"/>
+
+  <!-- ============ ROW 1 : query / embeddings / user ============ -->
+  <rect x="60" y="70" width="760" height="190" rx="16" fill="none" stroke="#1E47E6" stroke-width="2" stroke-dasharray="6,5"/>
+  <text x="90" y="108" font-size="18" font-weight="700" fill="#1E47E6">1.</text>
+
+  <!-- embeddings icon -->
+  <g>
+    <rect x="158" y="128" width="34" height="22" rx="4" fill="#F8FAFC" stroke="#13171E" stroke-width="2"/>
+    <line x1="164" y1="135" x2="186" y2="135" stroke="#13171E" stroke-width="2"/>
+    <line x1="164" y1="143" x2="186" y2="143" stroke="#13171E" stroke-width="2"/>
+    <line x1="175" y1="150" x2="175" y2="162" stroke="#13171E" stroke-width="2"/>
+    <line x1="150" y1="162" x2="200" y2="162" stroke="#13171E" stroke-width="2"/>
+    <line x1="150" y1="162" x2="150" y2="173" stroke="#13171E" stroke-width="2"/>
+    <line x1="175" y1="162" x2="175" y2="173" stroke="#13171E" stroke-width="2"/>
+    <line x1="200" y1="162" x2="200" y2="173" stroke="#13171E" stroke-width="2"/>
+    <circle cx="150" cy="178" r="5" fill="#13171E"/>
+    <circle cx="175" cy="178" r="5" fill="#13171E"/>
+    <circle cx="200" cy="178" r="5" fill="#13171E"/>
+  </g>
+  <text x="175" y="208" font-size="13" fill="#4C5763" text-anchor="middle">Embeddings</text>
+  <text x="175" y="224" font-size="13" fill="#4C5763" text-anchor="middle">Service</text>
+
+  <!-- query icon -->
+  <g>
+    <rect x="538" y="128" width="34" height="34" rx="6" fill="none" stroke="#7E8995" stroke-width="2"/>
+    <line x1="544" y1="138" x2="566" y2="138" stroke="#7E8995" stroke-width="1.5"/>
+    <line x1="544" y1="146" x2="566" y2="146" stroke="#7E8995" stroke-width="1.5"/>
+    <line x1="544" y1="154" x2="558" y2="154" stroke="#7E8995" stroke-width="1.5"/>
+    <circle cx="567" cy="160" r="8" fill="none" stroke="#13171E" stroke-width="2"/>
+    <line x1="573" y1="166" x2="581" y2="174" stroke="#13171E" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <text x="555" y="204" font-size="11" fill="#7E8995" text-anchor="middle">customer support</text>
+  <text x="555" y="220" font-size="13" font-weight="700" fill="#4C5763" text-anchor="middle">Query</text>
+
+  <!-- speech bubble: customer support query -->
+  <rect x="400" y="14" width="310" height="46" rx="12" fill="#F8FAFC" stroke="#D4DBE3" stroke-width="1.5"/>
+  <path d="M548,60 L566,60 L554,76 Z" fill="#F8FAFC" stroke="#D4DBE3" stroke-width="1.5"/>
+  <text x="555" y="33" font-size="13" fill="#4C5763" text-anchor="middle">"Why hasn't my order</text>
+  <text x="555" y="49" font-size="13" fill="#4C5763" text-anchor="middle">shipped yet?"</text>
+
+  <!-- user icon -->
+  <circle cx="760" cy="150" r="32" fill="none" stroke="#1E47E6" stroke-width="2.5"/>
+  <circle cx="760" cy="133" r="9" fill="#13171E"/>
+  <path d="M740,170 Q760,142 780,170 Z" fill="#13171E"/>
+  <text x="760" y="208" font-size="13" fill="#4C5763" text-anchor="middle">User</text>
+
+  <!-- row1 arrows -->
+  <line x1="574" y1="150" x2="222" y2="150" stroke="#7E8995" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="726" y1="150" x2="610" y2="150" stroke="#7E8995" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- dotted: cache-hit response straight back to user -->
+  <line x1="385" y1="450" x2="726" y2="184" stroke="#13171E" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arrowInk)"/>
+
+  <!-- ============ ROW 2 : semantic cache / distance check / RAG ============ -->
+
+  <!-- box 2: semantic cache -->
+  <rect x="60" y="300" width="190" height="250" rx="16" fill="none" stroke="#1E47E6" stroke-width="2" stroke-dasharray="6,5"/>
+  <text x="90" y="338" font-size="18" font-weight="700" fill="#1E47E6">2.</text>
+  <g>
+    <rect x="137" y="362" width="36" height="36" rx="4" fill="#F8FAFC" stroke="#13171E" stroke-width="2"/>
+    <rect x="149" y="374" width="12" height="12" fill="#1E47E6"/>
+    <line x1="155" y1="362" x2="155" y2="353" stroke="#13171E" stroke-width="2"/>
+    <line x1="155" y1="398" x2="155" y2="407" stroke="#13171E" stroke-width="2"/>
+    <line x1="137" y1="380" x2="128" y2="380" stroke="#13171E" stroke-width="2"/>
+    <line x1="173" y1="380" x2="182" y2="380" stroke="#13171E" stroke-width="2"/>
+  </g>
+  <text x="155" y="440" font-size="13" fill="#4C5763" text-anchor="middle">Semantic</text>
+  <text x="155" y="456" font-size="13" fill="#4C5763" text-anchor="middle">Cache</text>
+  <line x1="178" y1="260" x2="160" y2="300" stroke="#7E8995" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- already-cached FAQ entry -->
+  <rect x="75" y="470" width="160" height="40" rx="8" fill="#F8FAFC" stroke="#D4DBE3" stroke-width="1.2"/>
+  <text x="155" y="485" font-size="10" fill="#7E8995" text-anchor="middle">cached: "Why delivery</text>
+  <text x="155" y="499" font-size="10" fill="#7E8995" text-anchor="middle">is taking so long?"</text>
+
+  <!-- box 3: distance threshold check (not a binary hit/miss cache) -->
+  <rect x="280" y="300" width="190" height="250" rx="16" fill="none" stroke="#1E47E6" stroke-width="2" stroke-dasharray="6,5"/>
+  <text x="300" y="330" font-size="18" font-weight="700" fill="#1E47E6">3.</text>
+  <text x="375" y="357" font-size="11" fill="#7E8995" text-anchor="middle">vector similarity check</text>
+
+  <!-- embedding-space worked example: the two questions land close together -->
+  <circle cx="340" cy="405" r="32" fill="none" stroke="#1E47E6" stroke-width="2" stroke-dasharray="3,3"/>
+  <circle cx="340" cy="405" r="4" fill="#7E8995"/>
+  <text x="340" y="421" font-size="9" fill="#7E8995" text-anchor="middle">cached</text>
+  <circle cx="358" cy="392" r="4" fill="#1E47E6"/>
+  <text x="394" y="389" font-size="9" fill="#1E47E6" text-anchor="middle">this query</text>
+  <line x1="340" y1="405" x2="358" y2="392" stroke="#4C5763" stroke-width="1.2"/>
+  <text x="362" y="412" font-size="9.5" fill="#4C5763">d</text>
+
+  <text x="375" y="460" font-size="14" font-weight="700" fill="#1E47E6" text-anchor="middle">d ≤ τ → HIT</text>
+  <text x="375" y="479" font-size="10" fill="#13171E" text-anchor="middle">↳ served from cache directly,</text>
+  <text x="375" y="492" font-size="10" fill="#13171E" text-anchor="middle">skips RAG/LLM</text>
+  <text x="375" y="514" font-size="10" fill="#7E8995" text-anchor="middle">(d &gt; τ → miss → ask RAG)</text>
+
+  <line x1="250" y1="405" x2="280" y2="405" stroke="#7E8995" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="470" y1="445" x2="510" y2="445" stroke="#7E8995" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- box 4: RAG -->
+  <rect x="510" y="300" width="230" height="440" rx="16" fill="none" stroke="#1E47E6" stroke-width="2" stroke-dasharray="6,5"/>
+  <text x="540" y="335" font-size="18" font-weight="700" fill="#1E47E6">4.</text>
+  <text x="635" y="335" font-size="15" font-weight="700" fill="#13171E" text-anchor="middle">RAG</text>
+
+  <!-- vector database -->
+  <rect x="565" y="380" width="140" height="130" rx="12" fill="#13171E"/>
+  <circle cx="675" cy="392" r="8" fill="#1E47E6"/>
+  <g>
+    <circle cx="615" cy="415" r="5" fill="#F8FAFC"/>
+    <circle cx="655" cy="415" r="5" fill="#F8FAFC"/>
+    <circle cx="635" cy="440" r="5" fill="#F8FAFC"/>
+    <line x1="615" y1="415" x2="655" y2="415" stroke="#F8FAFC" stroke-width="1.5"/>
+    <line x1="615" y1="415" x2="635" y2="440" stroke="#F8FAFC" stroke-width="1.5"/>
+    <line x1="655" y1="415" x2="635" y2="440" stroke="#F8FAFC" stroke-width="1.5"/>
+  </g>
+  <text x="635" y="472" font-size="13" fill="#F8FAFC" text-anchor="middle">Vector</text>
+  <text x="635" y="488" font-size="13" fill="#F8FAFC" text-anchor="middle">Database</text>
+
+  <line x1="635" y1="510" x2="635" y2="530" stroke="#7E8995" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- LLM -->
+  <rect x="565" y="530" width="140" height="130" rx="12" fill="#13171E"/>
+  <circle cx="635" cy="570" r="18" fill="none" stroke="#F8FAFC" stroke-width="2"/>
+  <circle cx="635" cy="570" r="3" fill="#F8FAFC"/>
+  <line x1="635" y1="552" x2="635" y2="562" stroke="#F8FAFC" stroke-width="1.5"/>
+  <line x1="619" y1="580" x2="627" y2="574" stroke="#F8FAFC" stroke-width="1.5"/>
+  <line x1="651" y1="580" x2="643" y2="574" stroke="#F8FAFC" stroke-width="1.5"/>
+  <text x="635" y="625" font-size="14" font-weight="700" fill="#F8FAFC" text-anchor="middle">LLM</text>
+
+  <!-- RAG -> response (elbow) -->
+  <polyline points="740,565 815,565 815,795" fill="none" stroke="#7E8995" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- ============ BOTTOM : update cache / response / sourced faqs ============ -->
+
+  <rect x="60" y="800" width="420" height="55" rx="10" fill="#13171E"/>
+  <text x="270" y="833" font-size="16" font-weight="700" fill="#F8FAFC" text-anchor="middle">Update Cache</text>
+
+  <line x1="155" y1="800" x2="155" y2="550" stroke="#7E8995" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- response bubble -->
+  <rect x="780" y="795" width="70" height="45" rx="10" fill="#F8FAFC" stroke="#D4DBE3" stroke-width="1.5"/>
+  <circle cx="803" cy="817" r="3" fill="#4C5763"/>
+  <circle cx="815" cy="817" r="3" fill="#4C5763"/>
+  <circle cx="827" cy="817" r="3" fill="#4C5763"/>
+  <text x="815" y="858" font-size="13" fill="#4C5763" text-anchor="middle">Response</text>
+
+  <!-- response -> user (right margin, full height) -->
+  <line x1="845" y1="795" x2="845" y2="184" stroke="#13171E" stroke-width="1.5" marker-end="url(#arrowInk)"/>
+
+  <!-- response -> update cache (feedback) -->
+  <path d="M780,825 L480,827" fill="none" stroke="#7E8995" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- sourced faqs -->
+  <g>
+    <rect x="148" y="903" width="26" height="32" rx="3" fill="#F8FAFC" stroke="#D4DBE3" stroke-width="1.5"/>
+    <rect x="158" y="897" width="26" height="32" rx="3" fill="#F8FAFC" stroke="#D4DBE3" stroke-width="1.5"/>
+    <line x1="164" y1="906" x2="178" y2="906" stroke="#7E8995" stroke-width="1.2"/>
+    <line x1="164" y1="912" x2="178" y2="912" stroke="#7E8995" stroke-width="1.2"/>
+    <line x1="164" y1="918" x2="174" y2="918" stroke="#7E8995" stroke-width="1.2"/>
+  </g>
+  <text x="170" y="950" font-size="13" fill="#4C5763" text-anchor="middle">Sourced FAQs</text>
+  <line x1="166" y1="895" x2="160" y2="855" stroke="#7E8995" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+</svg>
